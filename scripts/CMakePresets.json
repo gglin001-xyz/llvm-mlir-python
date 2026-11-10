@@ -1,10 +1,10 @@
 {
-  "version": 10,
+  "version": 6,
   "configurePresets": [
     {
-      "name": "osx",
+      "name": "python",
       "generator": "Ninja",
-      "description": "linux with mold",
+      "description": "MLIR Python bindings with the CPython 3.12+ stable ABI",
       "binaryDir": "${sourceDir}/../build",
       "cacheVariables": {
         "CMAKE_BUILD_TYPE": "Release",
@@ -12,9 +12,11 @@
         "CMAKE_EXPORT_COMPILE_COMMANDS": true,
         "CMAKE_C_COMPILER": "clang",
         "CMAKE_CXX_COMPILER": "clang++",
-        "CMAKE_SYSROOT": "/",
-        "CMAKE_INSTALL_RPATH_USE_LINK_PATH": true,
         "CMAKE_LINKER_TYPE": "MOLD",
+        "CMAKE_INSTALL_RPATH_USE_LINK_PATH": true,
+        "CMAKE_C_VISIBILITY_PRESET": "hidden",
+        "CMAKE_CXX_VISIBILITY_PRESET": "hidden",
+        "CMAKE_VISIBILITY_INLINES_HIDDEN": true,
         "LLVM_ENABLE_ASSERTIONS": true,
         "LLVM_ENABLE_WARNINGS": true,
         "LLVM_ENABLE_BINDINGS": false,
@@ -24,35 +26,26 @@
         "LLVM_INCLUDE_EXAMPLES": false,
         "LLVM_INCLUDE_TESTS": false,
         "LLVM_INCLUDE_TOOLS": true,
-        "LLVM_INCLUDE_UTILS": true,
-        "LLVM_BUILD_UTILS": true,
-        "LLVM_INSTALL_UTILS": true,
+        "LLVM_INCLUDE_UTILS": false,
         "LLVM_INCLUDE_RUNTIMES": false,
         "LLVM_INCLUDE_BENCHMARKS": false,
         "LLVM_APPEND_VC_REV": false,
-        "LLVM_ENABLE_IDE": true,
-        "LLVM_TARGETS_TO_BUILD": "host;NVPTX;AMDGPU",
-        "LLVM_ENABLE_PROJECTS": "mlir;lld;clang",
+        "LLVM_TARGETS_TO_BUILD": "host",
+        "LLVM_ENABLE_PROJECTS": "mlir",
         "MLIR_INCLUDE_TESTS": false,
-        "MLIR_ENABLE_BINDINGS_PYTHON": false
+        "MLIR_ENABLE_BINDINGS_PYTHON": true,
+        "MLIR_ENABLE_PYTHON_STABLE_ABI": true,
+        "MLIR_ENABLE_EXECUTION_ENGINE": true,
+        "Python3_EXECUTABLE": "${sourceDir}/../../.venv/bin/python",
+        "Python_EXECUTABLE": "${sourceDir}/../../.venv/bin/python"
       }
     },
     {
-      "name": "osx_lld",
-      "inherits": "osx",
-      "description": "macos with lld",
+      "name": "python-lld",
+      "inherits": "python",
+      "description": "MLIR Python bindings linked with LLD",
       "cacheVariables": {
-        "CMAKE_SYSROOT": "",
         "CMAKE_LINKER_TYPE": "LLD"
-      }
-    },
-    {
-      "name": "osx_pixi",
-      "inherits": "osx",
-      "description": "linux with mold and pixi",
-      "cacheVariables": {
-        "CMAKE_SYSROOT": "$env{CONDA_BUILD_SYSROOT}",
-        "CMAKE_PREFIX_PATH": "$env{CMAKE_PREFIX_PATH}"
       }
     }
   ]

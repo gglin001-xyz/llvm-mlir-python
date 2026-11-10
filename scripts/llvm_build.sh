@@ -1,18 +1,9 @@
-#!/bin/bash
-
+#!/usr/bin/env bash
 set -euo pipefail
 
-ln -sfn "$PWD/scripts/CMakePresets.json" "$PWD/llvm-project/llvm/CMakeUserPresets.json"
-
-pushd llvm-project
-
-cmake --preset osx -S$PWD/llvm -B$PWD/build
-
-# TODO: reduce cmake targets, only llvm & mlir libs
-
-cmake --build $PWD/build --target all
-# cmake --build $PWD/build --target install
-
-popd
-
-###############################################################################
+cd "$(dirname "${BASH_SOURCE[0]}")/.."
+bash scripts/prepare.sh
+ln -sfn "$PWD/scripts/CMakePresets.json" llvm-project/llvm/CMakeUserPresets.json
+cmake --preset "${LLVM_PRESET:-python}" -S llvm-project/llvm -B llvm-project/build "$@"
+cmake --build llvm-project/build --parallel "${CMAKE_BUILD_PARALLEL_LEVEL:-64}" \
+  --target MLIRPythonModules

@@ -2,6 +2,7 @@
 
 set -euo pipefail
 
+cd "$(dirname "${BASH_SOURCE[0]}")/.."
 mkdir -p llvm-project && pushd llvm-project
 
 git init

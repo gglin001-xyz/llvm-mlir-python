@@ -1,0 +1,59 @@
+{
+  "version": 10,
+  "configurePresets": [
+    {
+      "name": "osx",
+      "generator": "Ninja",
+      "description": "linux with mold",
+      "binaryDir": "${sourceDir}/../build",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Release",
+        "CMAKE_INSTALL_PREFIX": "${sourceDir}/../build/install",
+        "CMAKE_EXPORT_COMPILE_COMMANDS": true,
+        "CMAKE_C_COMPILER": "clang",
+        "CMAKE_CXX_COMPILER": "clang++",
+        "CMAKE_SYSROOT": "/",
+        "CMAKE_INSTALL_RPATH_USE_LINK_PATH": true,
+        "CMAKE_LINKER_TYPE": "MOLD",
+        "LLVM_ENABLE_ASSERTIONS": true,
+        "LLVM_ENABLE_WARNINGS": true,
+        "LLVM_ENABLE_BINDINGS": false,
+        "LLVM_ENABLE_ZSTD": false,
+        "LLVM_ENABLE_ZLIB": false,
+        "LLVM_INCLUDE_DOCS": false,
+        "LLVM_INCLUDE_EXAMPLES": false,
+        "LLVM_INCLUDE_TESTS": false,
+        "LLVM_INCLUDE_TOOLS": true,
+        "LLVM_INCLUDE_UTILS": true,
+        "LLVM_BUILD_UTILS": true,
+        "LLVM_INSTALL_UTILS": true,
+        "LLVM_INCLUDE_RUNTIMES": false,
+        "LLVM_INCLUDE_BENCHMARKS": false,
+        "LLVM_APPEND_VC_REV": false,
+        "LLVM_ENABLE_IDE": true,
+        "LLVM_TARGETS_TO_BUILD": "host;NVPTX;AMDGPU",
+        "LLVM_ENABLE_PROJECTS": "mlir;lld;clang",
+        "MLIR_INCLUDE_TESTS": false,
+        "MLIR_ENABLE_BINDINGS_PYTHON": false
+      }
+    },
+    {
+      "name": "osx_lld",
+      "inherits": "osx",
+      "description": "macos with lld",
+      "cacheVariables": {
+        "CMAKE_SYSROOT": "",
+        "CMAKE_LINKER_TYPE": "LLD"
+      }
+    },
+    {
+      "name": "osx_pixi",
+      "inherits": "osx",
+      "description": "linux with mold and pixi",
+      "cacheVariables": {
+        "CMAKE_SYSROOT": "$env{CONDA_BUILD_SYSROOT}",
+        "CMAKE_PREFIX_PATH": "$env{CMAKE_PREFIX_PATH}"
+      }
+    }
+  ]
+}

@@ -67,8 +67,9 @@ def main():
             f"Metadata-Version: 2.4\nName: mlir-python-bindings\nVersion: {version}\n"
             "Summary: MLIR Python bindings with the CPython stable ABI\n"
             "Requires-Python: >=3.12\n"
-            "License-Expression: Apache-2.0 WITH LLVM-exception AND BSD-3-Clause\n"
+            "License-Expression: Apache-2.0 WITH LLVM-exception AND BSD-3-Clause AND MIT\n"
             "License-File: licenses/LLVM.txt\nLicense-File: licenses/nanobind.txt\n"
+            "License-File: licenses/robin_map.txt\n"
             + "".join(f"Requires-Dist: {dependency}\n" for dependency in dependencies)
         )
         licenses = metadata / "licenses"
@@ -82,6 +83,8 @@ def main():
             text=True,
         ).strip()
         shutil.copyfile(nanobind_license, licenses / "nanobind.txt")
+        robin_map = Path(nanobind_license).parents[2] / "nanobind/ext/robin_map/include/tsl/robin_map.h"
+        (licenses / "robin_map.txt").write_text(robin_map.read_text().split("*/", 1)[0] + "*/\n")
         wheel = Path(temporary) / f"{name}-{tag}.whl"
         with WheelFile(wheel, "w") as archive:
             archive.write_files(staging)

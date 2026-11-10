@@ -12,6 +12,6 @@ bash scripts/llvm_build.sh
 uv run scripts/build_wheel.py
 
 # Install and verify
-uv pip install --python .venv/bin/python dist/*.whl
+uv pip install --python .venv/bin/python --reinstall-package mlir-python-bindings dist/*.whl
 .venv/bin/python -I scripts/check_python.py
 ```

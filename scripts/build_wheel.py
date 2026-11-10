@@ -68,8 +68,8 @@ def main():
             "Summary: MLIR Python bindings with the CPython stable ABI\n"
             "Requires-Python: >=3.12\n"
             "License-Expression: Apache-2.0 WITH LLVM-exception AND BSD-3-Clause AND MIT\n"
-            "License-File: licenses/LLVM.txt\nLicense-File: licenses/nanobind.txt\n"
-            "License-File: licenses/robin_map.txt\n"
+            "License-File: LLVM.txt\nLicense-File: nanobind.txt\n"
+            "License-File: robin_map.txt\n"
             + "".join(f"Requires-Dist: {dependency}\n" for dependency in dependencies)
         )
         licenses = metadata / "licenses"

@@ -1,0 +1,11 @@
+{
+  "tools": [
+    "mlir-opt", "mlir-translate", "mlir-runner", "mlir-reduce", "mlir-query",
+    "mlir-rewrite"
+  ],
+  "runtimes": [
+    "mlir_async_runtime", "mlir_c_runner_utils", "mlir_runner_utils",
+    "mlir_float16_utils", "mlir_apfloat_wrappers",
+    "mlir_arm_sme_abi_stubs", "mlir_arm_runner_utils"
+  ]
+}
